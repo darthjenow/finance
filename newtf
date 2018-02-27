@@ -1,0 +1,60 @@
+#!/bin/python3.6
+
+import sys
+
+import config
+
+argv = sys.argv
+
+accounts = []
+
+def inputdata(prompt, check = 0):
+    while True:
+        inputdata = input (prompt)
+
+        if len (inputdata) != 0:
+            if check == 0:
+                return inputdata
+            else:
+                try:
+                    if check == 'float':
+                        float (inputdata)
+                    elif check == 'int':
+                        int (inputdata)
+                        
+                    return inputdata
+                except ValueError:
+                    pass
+
+
+def create_account_prompt_text():
+    output = 'Account:\n'
+
+    for account in config.accounts: output += "(" + str(config.accounts.index(account)) + ") " + account + "\n"
+
+    return output
+
+def write_file(account, category, description, amount):
+    print (config.accounts[int(account)])
+
+def main():
+    with open(fileBsv, 'a') as data:
+        account = inputdata (create_account_prompt_text(), 'int')
+        category = inputdata ("Category:")
+        description = inputdata ("Description: ")
+        amount = inputdata ("Amount: ", 'float')
+
+        write_file(account, category, description, amount)
+
+if len(argv) == 2:
+    fileBsv = argv[1]
+elif len(argv) == 1:
+    fileBsv = config.data_file_path
+else:
+    print ("Too many arguments! Syntax:")
+    print (argv[0] + " [<data file path>]")
+    sys.exit()
+
+account, category, description, amount = '', '', '', ''
+
+main()
